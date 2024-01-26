@@ -29,10 +29,15 @@ end
 
 ---@return string[]
 local function get_project_paths()
+    local cwd = vim.fn.getcwd()
 	local projects = config.get_projects()
 	local paths = {}
 	for _, value in ipairs(projects) do
-		table.insert(paths, value.path)
+        if config.config.project_filter then
+            if config.config.project_filter(value.path) == 1 then
+		        table.insert(paths, value.path)
+            end
+        end
 	end
 	return paths
 end
@@ -42,6 +47,9 @@ local function cd_project(dir)
 	vim.g.cd_project_last_project = vim.g.cd_project_current_project
 	vim.g.cd_project_current_project = dir
 	vim.fn.execute("cd " .. dir)
+    if config.config.after_switch_project then
+        config.config.after_switch_project(dir)
+    end
 end
 
 local function add_current_project()
