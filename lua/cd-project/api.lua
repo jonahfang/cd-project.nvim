@@ -86,6 +86,7 @@ return {
 	cd_project = cd_project,
 	add_current_project = add_current_project,
 	get_project_paths = get_project_paths,
+    get_projects = get_projects,
 	back = back,
 	find_project_dir = find_project_dir,
 }

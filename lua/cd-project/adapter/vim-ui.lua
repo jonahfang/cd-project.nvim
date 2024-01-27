@@ -6,21 +6,19 @@ end
 
 -- TODO: how to make this level purely to get user input and pass to the api functions
 local function cd_project()
-	vim.ui.select(api.get_project_paths(), {
-		prompt = "Select a directory",
+	vim.ui.select(config.get_projects(), {
         format_item = function(item)
             if config.config.format_project_path then
-                return config.config.format_project_path(item)
+                return config.config.format_project_path(item.path,item.name)
             else
                 return item
             end
         end,
-	}, function(dir)
-		if not dir then
-			return logErr("Must select a valid dir")
+	}, function(selected)
+		if not selected then
+			return
 		end
-		api.cd_project(dir)
-		--vim.notify("switched to dir: " .. dir)
+		api.cd_project(selected.path)
 	end)
 end
 
