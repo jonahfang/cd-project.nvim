@@ -33,11 +33,7 @@ local function get_project_paths()
 	local projects = config.get_projects()
 	local paths = {}
 	for _, value in ipairs(projects) do
-        if config.config.project_filter then
-            if config.config.project_filter(value.path) == 1 then
-		        table.insert(paths, value.path)
-            end
-        end
+       table.insert(paths, value.path)
 	end
 	return paths
 end

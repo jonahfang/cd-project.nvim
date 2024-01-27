@@ -55,7 +55,16 @@ end
 
 ---@return CdProject.Project[]
 M.get_projects = function()
-	return read_or_init_json_file(M.config.projects_config_filepath)
+	local rows = read_or_init_json_file(M.config.projects_config_filepath)
+	local new_rows = {}
+	for _, value in ipairs(rows) do
+        if M.config.project_filter then
+            if M.config.project_filter(value.path) == 1 then
+		        table.insert(new_rows, value)
+            end
+        end
+	end
+	return new_rows
 end
 
 ---@param projects CdProject.Project[]
