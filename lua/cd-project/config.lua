@@ -1,6 +1,7 @@
 ---@class CdProject.Config
 ---@field projects_config_filepath string
 ---@field project_dir_pattern string[]
+---@field before_switch_project function
 ---@field after_switch_project function
 ---@field project_filter function
 ---@field format_project_path function
@@ -9,6 +10,7 @@
 local default_config = {
 	projects_config_filepath = vim.fs.normalize(vim.fn.stdpath("config") .. "/cd-project.nvim.json"),
 	project_dir_pattern = { ".git", ".gitignore", "Cargo.toml", "package.json", "go.mod" },
+    before_switch_project = nil,
     after_switch_project = nil,
     project_filter = nil,
     format_project_path = nil,
