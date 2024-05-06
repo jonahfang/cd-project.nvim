@@ -6,6 +6,12 @@ end
 
 -- TODO: how to make this level purely to get user input and pass to the api functions
 local function cd_project()
+    if config.config.before_switch_project then
+        local ok = config.config.before_switch_project()
+        if not ok then
+            return
+        end
+    end
 	vim.ui.select(config.get_projects(), {
         format_item = function(item)
             if config.config.format_project_path then
